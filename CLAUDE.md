@@ -13,35 +13,37 @@ The analytical goal is to explain structural determinants of internet access (no
 Notebooks run in Jupyter. No build or test pipeline exists — execution order within each notebook matters.
 
 ```bash
-# Start Jupyter
-jupyter notebook
-
-# Or directly open a specific notebook
 jupyter notebook eaui2026_v2.ipynb
 ```
 
-Key dependency: `pyreadstat` for reading `.sav` (SPSS) files.
+Key dependencies: `pyreadstat` (read `.sav` SPSS files), `prince` (MCA / multiple correspondence analysis).
 
-## Notebook Architecture
+## Notebooks
 
-### `eaui2026_v2.ipynb` — Active notebook for 2026 data
+- **`eaui2026_v2.ipynb`** — Active notebook. Sections 1–10 are setup; section 11+ is analysis.
+- **`eaui2026.ipynb`** — Older draft, superseded by v2. Do not use as the reference.
 
-Cells must be executed in order (sections 1–10 are setup; section 11+ is analysis):
+## Notebook Architecture — `eaui2026_v2.ipynb`
+
+Cells must be executed in order:
 
 | Section | What it does |
 |---------|-------------|
 | 1. Carga | Reads `data/sav/2026.sav` via `pyreadstat`, 5,000 rows × 587 columns |
-| 2. GSE derivado | Derives socioeconomic group (`gse`: E→AB) from `A10` (education) + `A11` (occupation of household head) — must run before any renaming |
+| 2. GSE derivado | Derives `gse` (E→AB) from `A10` (education) + `A11` (occupation of household head) — must run before renaming |
 | 3. Etiquetas limpias | Builds `etiquetas_limpias` dict from SPSS metadata, stripping code prefixes |
 | 4. Diccionario | Searchable variable dictionary from `meta.column_names` / `meta.column_labels` |
 | 5. NS/NR | Replaces `9999999` sentinel values with `NaN` in money/amount columns |
 | 6. Renombrado | Maps 53 SPSS codes (e.g. `COD_REGION`, `Q1_2`) to short readable names (e.g. `region`, `sexo`) |
-| 7. Recodificaciones | Overwrites numeric codes with text labels in-place (no `_rec` suffix) |
+| 7. Recodificaciones | Overwrites numeric codes with text labels in-place (no `_rec` suffix); also derives `educ_grupo` and `tramo_edad` |
 | 8. Ingreso del hogar | Derives continuous income (`ingreso_pm`) from banded income codes (vary by household size), then creates `ingreso_tramo` and `ingreso_grupo` |
 | 9. Funciones de análisis | Defines `ORDEN_CATEGORIAS`, `fordf()`, `dstats()` |
-| 10. Grupos RM | Defines `GRUPOS_RM` dict and `analizar_rm()` / `analizar_rm_cruce()` functions |
+| 10. Grupos RM | Defines `GRUPOS_RM` dict (25 multiple-response groups) and `analizar_rm()` / `analizar_rm_cruce()` |
+| 11+ | Analysis — e.g. section 11 classifies Q8 digital skills into `nivel_habilidades` (Básico / Intermedio / Avanzado / Sin habilidades) using `Q8_BASICO`, `Q8_INTERMEDIO`, `Q8_AVANZADO` dicts, then runs MCA with `prince` |
 
-### Core analysis functions (defined in section 9–10)
+## Core Analysis Functions (sections 9–10)
+
+**`fordf(df_tabla, titulo)`** — applies visual styling: integer format for weighted counts, 1-decimal for percentages. Returns a `Styler`. All `dstats`/`analizar_rm` functions call this when `estilo=True`.
 
 **`dstats(data_df, variables, tipo, cruce, factor, transponer, estilo)`**
 - `tipo='frecuencia'` — weighted frequency table for one variable
@@ -50,9 +52,9 @@ Cells must be executed in order (sections 1–10 are setup; section 11+ is analy
 - `factor`: weighting column — use `'fe_hogar'` for household-level vars, `'fe_personas'` for individual-level vars
 - `estilo=False` returns a plain DataFrame instead of a styled Styler
 
-**`analizar_rm(grupo, factor, top_n, estilo)`** — weighted analysis of a multiple-response group (defined in `GRUPOS_RM`)
+**`analizar_rm(grupo, factor='fe_hogar', top_n, estilo)`** — weighted analysis of a multiple-response group key from `GRUPOS_RM`
 
-**`analizar_rm_cruce(grupo, cruce, factor, estilo)`** — multiple-response group crossed by a demographic variable
+**`analizar_rm_cruce(grupo, cruce, factor='fe_personas', estilo)`** — multiple-response group crossed by a demographic variable
 
 ## Key Variable Conventions
 
@@ -60,6 +62,8 @@ Cells must be executed in order (sections 1–10 are setup; section 11+ is analy
 - All recoded variables use text labels directly (e.g. `'Hombre'/'Mujer'`, `'Urbana'/'Rural'`), never numeric codes after section 7
 - `ORDEN_CATEGORIAS` dict controls display ordering for all categorical variables
 - GSE categories ordered: `E → D → C3 → C2 → C1 → AB` (low to high)
+- Derived variables added in section 7: `educ_grupo` (`'Básica o menos'/'Media'/'Superior'`), `tramo_edad` (`'Menor de 18'`…`'60 y más'`)
+- `nivel_habilidades` derived in section 11 from Q8 columns: hierarchical — Avanzado > Intermedio > Básico > Sin habilidades
 
 ## Data Files
 
