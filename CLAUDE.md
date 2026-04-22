@@ -10,11 +10,13 @@ The analytical goal is to explain structural determinants of internet access (no
 
 ## Running the Notebooks
 
-Notebooks run in Jupyter. No build or test pipeline exists — execution order within each notebook matters.
+Notebooks run in Jupyter. No build or test pipeline exists — **execution order within each notebook is mandatory**.
 
 ```bash
 jupyter notebook eaui2026_v2.ipynb
 ```
+
+**CRITICAL: Always execute sections 1–10 first** before any analysis. These sections load data, derive variables, and define analysis functions. Skipping or reordering breaks downstream cells.
 
 Key dependencies: `pyreadstat` (read `.sav` SPSS files), `prince` (MCA / multiple correspondence analysis).
 
@@ -56,6 +58,46 @@ Cells must be executed in order:
 
 **`analizar_rm_cruce(grupo, cruce, factor='fe_personas', estilo)`** — multiple-response group crossed by a demographic variable
 
+## Weighting Guide
+
+All analysis functions support weighted calculation via the `factor` parameter. Choose the correct weight for your variable's scope:
+
+| Weight | Use for | Example |
+|--------|---------|---------|
+| `fe_hogar` | Household-level variables | `acceso_internet_hogar`, `pago_mensual_internet`, `ingreso_hogar` |
+| `fe_personas` | Individual/person-level variables | `sexo`, `edad`, `educ`, `uso_computador`, `actividad` |
+| `pond_hogar` | Household-level, normalized | Alternative to `fe_hogar`; used in probability models |
+| `pond_personas` | Individual-level, normalized | Alternative to `fe_personas`; used in probability models |
+
+**Default behavior:** `dstats()` defaults to `factor=None` — must always specify. `analizar_rm()` defaults to `factor='fe_hogar'`. Use `factor='fe_personas'` when analyzing individual responses (e.g., digital skills Q8, individual internet use).
+
+## Common Analysis Patterns
+
+**Frequency distribution (one variable):**
+```python
+dstats(df, 'sexo', tipo='frecuencia', factor='fe_personas', estilo=True)
+```
+
+**Cross-tabulation (variable by demographic):**
+```python
+dstats(df, 'acceso_internet_hogar', tipo='cruzada', cruce='gse', factor='fe_hogar', estilo=True)
+```
+
+**Weighted mean (e.g., average age by GSE):**
+```python
+dstats(df, 'edad', tipo='promedio', cruce='gse', factor='fe_personas', estilo=True)
+```
+
+**Multiple-response analysis (e.g., digital skills Q8):**
+```python
+analizar_rm('Q8', factor='fe_personas', top_n=10, estilo=True)
+```
+
+**Multiple-response crossed by demographic:**
+```python
+analizar_rm_cruce('A12', cruce='gse', factor='fe_personas', estilo=True)
+```
+
 ## Key Variable Conventions
 
 - Weighting columns: `fe_hogar` (household weight), `fe_personas` (person weight), `pond_hogar`, `pond_personas`
@@ -71,6 +113,31 @@ Cells must be executed in order:
 - `data/csv/` — CSV exports; `df_final_muestra.csv` is the combined multi-year analysis sample
 - `data/xlsx/` — Excel exports
 - `diccionario_variables.csv` — column-level metadata (name, type, unique count, nulls)
+
+## Troubleshooting & Data Validation
+
+**"NameError: name 'dstats' is not defined"** → Section 9 (Funciones de análisis) has not been executed. Run sections 1–10 in order.
+
+**"KeyError: 'sexo'" or similar** → Variable does not exist or has not been renamed yet. Check section 6 (`nombres_cortos` dict) and confirm section 6 executed successfully.
+
+**Weights not summing correctly** → Verify correct `factor` parameter:
+  - Household-level analysis? Use `fe_hogar`
+  - Person-level analysis? Use `fe_personas`
+  - Check that df was not filtered; if filtered, weights may not sum to the full sample
+
+**Missing values appearing in output** → NS/NR sentinels (`9999999`) may not have been replaced. Confirm section 5 executed. Additional `NaN` values from `dropna()` in analysis functions are expected.
+
+**ACM plot missing categories** — Confirm `mask_q8` or equivalent filter is applied correctly in section 11. Complete cases (all variables present) are required for `prince.MCA`.
+
+## Notebook Lifecycle
+
+- **`eaui2026_v2.ipynb`** — Active production notebook. Sections 1–10 must execute without error before any analysis.
+- **`eaui2026.ipynb`** — Deprecated draft. Do not use as the reference; all active work is in v2.
+
+When modifying notebook structure:
+1. Preserve section order (1–10 are setup; 11+ are analysis)
+2. Do not insert cells that break dependency chains (e.g., renaming before GSE derivation)
+3. Test full top-to-bottom execution before committing
 
 <!-- code-review-graph MCP tools -->
 ## MCP Tools: code-review-graph
