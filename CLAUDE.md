@@ -8,6 +8,23 @@ Analysis of the **Encuesta de Acceso y Usos de Internet (EAUI)** — Chile's nat
 
 The analytical goal is to explain structural determinants of internet access (not longitudinal tracking) using demographic, socioeconomic, and territorial variables, explicitly excluding technological proxies (`tipo_acceso`, `usa_computador`, `usa_smartphone`) that would be tautological.
 
+## Setup
+
+**Python Requirements:**
+- Python 3.8+ (tested with 3.10+)
+- Virtual environment recommended
+
+**Install dependencies:**
+```bash
+pip install pyreadstat prince pandas numpy seaborn matplotlib plotly jupyter
+```
+
+**Verify setup:**
+```bash
+jupyter notebook eaui2026_v2.ipynb
+# Run cell 1 (Carga) to verify data loads (should show "Filas: 5,000 | Columnas: 587")
+```
+
 ## Running the Notebooks
 
 Notebooks run in Jupyter. No build or test pipeline exists — **execution order within each notebook is mandatory**.
@@ -22,8 +39,8 @@ Key dependencies: `pyreadstat` (read `.sav` SPSS files), `prince` (MCA / multipl
 
 ## Notebooks
 
-- **`eaui2026_v2.ipynb`** — Active notebook. Sections 1–10 are setup; section 11+ is analysis.
-- **`eaui2026.ipynb`** — Older draft, superseded by v2. Do not use as the reference.
+- **`eaui2026_v2.ipynb`** — **Current production notebook.** Use this for all analysis. Sections 1–10 are setup; section 11+ is analysis.
+- **`eaui2026.ipynb`** — Archived draft. Reference only if investigating historical decisions; do not use for active analysis.
 
 ## Notebook Architecture — `eaui2026_v2.ipynb`
 
@@ -109,10 +126,27 @@ analizar_rm_cruce('A12', cruce='gse', factor='fe_personas', estilo=True)
 
 ## Data Files
 
-- `data/sav/` — SPSS source files (authoritative), one per year including `2026.sav`
-- `data/csv/` — CSV exports; `df_final_muestra.csv` is the combined multi-year analysis sample
-- `data/xlsx/` — Excel exports
-- `diccionario_variables.csv` — column-level metadata (name, type, unique count, nulls)
+Located in `data/` directory:
+- `data/sav/` — SPSS source files (authoritative), 11 files: 2008, 2011–2018, 2024–2026
+- `data/xlsx/` — Excel exports of raw data (10 files covering main survey years)
+- `data/2026_procesado.csv` — Processed 2026 data output
+- `diccionario_variables.csv` — Column-level metadata (587 variables, searchable by name/type/nulls)
+
+## Quick Reference
+
+**Always ensure sections 1–10 executed before analysis:**
+```python
+# Check that core functions are defined:
+help(dstats)  # Should show function signature
+ORDEN_CATEGORIAS.keys()  # Should show all category orderings
+len(GRUPOS_RM)  # Should be 25 multiple-response groups
+```
+
+**Common mistakes:**
+- Forgetting to specify `factor` in `dstats()` → use `'fe_hogar'` for household-level, `'fe_personas'` for individual-level
+- Using numeric codes after section 7 → use text labels only (e.g., `'Hombre'` not `1`)
+- Analyzing before running section 2 (GSE derivation) → breaks dependent analyses
+- Filtering the dataframe without recomputing weights → results won't sum to population totals
 
 ## Troubleshooting & Data Validation
 
