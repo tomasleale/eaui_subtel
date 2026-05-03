@@ -1,4 +1,38 @@
 {
-  "/Users/tomas/github/eaui_subtel/eaui_utils.py": 1777512248.8676262,
-  "/Users/tomas/github/eaui_subtel/docs/informe_final.pdf": 1777173933.8768458
+  "/Users/tomas/github/eaui_subtel/SUMMARY.md": {
+    "mtime": 1777787324.1879654,
+    "hash": "9be20494c83613516b8f8512d13b8096"
+  },
+  "/Users/tomas/github/eaui_subtel/CLASSIFICATION_MODEL_IMPROVED.md": {
+    "mtime": 1777787202.09902,
+    "hash": "bbb28480e3f3e6543b184cfcfdb558ae"
+  },
+  "/Users/tomas/github/eaui_subtel/ANALYSIS_COMPLETE.md": {
+    "mtime": 1777787252.6177151,
+    "hash": "b01307d389c10207ca2da791d1c3d022"
+  },
+  "/Users/tomas/github/eaui_subtel/SHAP_ANALYSIS.md": {
+    "mtime": 1777787873.2800152,
+    "hash": "41be9ad2e3f49acbfa89eaf4b0da63ea"
+  },
+  "/Users/tomas/github/eaui_subtel/CLASSIFICATION_MODEL.md": {
+    "mtime": 1777786866.2676125,
+    "hash": "dcb4aeaa41af78b1743b5aedd3fb7c71"
+  },
+  "/Users/tomas/github/eaui_subtel/README_ANALYSIS.md": {
+    "mtime": 1777787296.399322,
+    "hash": "1a716ff496a96a18b7b6e2b4de3bc9a0"
+  },
+  "/Users/tomas/github/eaui_subtel/CLAUDE.md": {
+    "mtime": 1777781818.394375,
+    "hash": "369629de4f18478fb599d3b36db422f8"
+  },
+  "/Users/tomas/github/eaui_subtel/GRAPH_INSIGHTS.md": {
+    "mtime": 1777786236.8328865,
+    "hash": "4b87e6d1d7dca3b8c1cb956eb2111e78"
+  },
+  "/Users/tomas/github/eaui_subtel/docs/informe_final.pdf": {
+    "mtime": 1777781818.7686908,
+    "hash": "4815e123ff0f6c08ce974f5341c5b315"
+  }
 }

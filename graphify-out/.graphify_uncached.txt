@@ -1,2 +1,9 @@
-/Users/tomas/github/eaui_subtel/eaui_utils.py
+/Users/tomas/github/eaui_subtel/SUMMARY.md
+/Users/tomas/github/eaui_subtel/CLASSIFICATION_MODEL_IMPROVED.md
+/Users/tomas/github/eaui_subtel/ANALYSIS_COMPLETE.md
+/Users/tomas/github/eaui_subtel/SHAP_ANALYSIS.md
+/Users/tomas/github/eaui_subtel/CLASSIFICATION_MODEL.md
+/Users/tomas/github/eaui_subtel/README_ANALYSIS.md
+/Users/tomas/github/eaui_subtel/CLAUDE.md
+/Users/tomas/github/eaui_subtel/GRAPH_INSIGHTS.md
 /Users/tomas/github/eaui_subtel/docs/informe_final.pdf

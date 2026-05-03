@@ -1,240 +1,629 @@
 {
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "h1",
+        "label": "Feature Engineering & Classification Pipeline",
+        "nodes": [
+          "feature_engineering",
+          "n_actividades_online",
+          "frecuencia_internet_feature",
+          "gradient_boosting_model",
+          "behavior_dominates_demographics"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.95
+      },
+      {
+        "id": "h2",
+        "label": "Data Processing & Skills Classification",
+        "nodes": [
+          "eaui2026_v3_ipynb",
+          "gse_derivation",
+          "data_pipeline",
+          "nivel_habilidades",
+          "skill_classification_hierarchy"
+        ],
+        "relation": "form",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.95
+      },
+      {
+        "id": "h3",
+        "label": "Policy Implications of Feature Importance",
+        "nodes": [
+          "behavior_dominates_demographics",
+          "access_not_bottleneck",
+          "resilience_finding",
+          "permutation_importance"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85
+      }
+    ]
+  },
   "nodes": [
     {
-      "id": "eaui_survey",
-      "label": "EAUI 2026 Survey",
-      "type": "concept",
-      "description": "Encuesta de Acceso y Uso de Internet \u2014 telecommunications survey data",
-      "source_file": "CLAUDE.md"
-    },
-    {
-      "id": "eaui_v3_notebook",
       "label": "eaui2026_v3.ipynb",
-      "type": "document",
-      "description": "Latest version, main processing pipeline",
-      "source_file": "CLAUDE.md"
+      "file_type": "code",
+      "source_file": "eaui2026_v3.ipynb",
+      "source_location": "notebook root",
+      "id": "eaui2026_v3_ipynb",
+      "community": 0,
+      "norm_label": "eaui2026_v3.ipynb"
     },
     {
+      "label": "SHAP Analysis: Explicabilidad del Modelo",
+      "file_type": "document",
+      "source_file": "SHAP_ANALYSIS.md",
+      "source_location": null,
+      "id": "shap_analysis",
+      "community": 3,
+      "norm_label": "shap analysis: explicabilidad del modelo"
+    },
+    {
+      "label": "Modelo de Clasificaci\u00f3n Mejorado",
+      "file_type": "document",
+      "source_file": "CLASSIFICATION_MODEL_IMPROVED.md",
+      "source_location": null,
+      "id": "classification_model_improved",
+      "community": 1,
+      "norm_label": "modelo de clasificacion mejorado"
+    },
+    {
+      "label": "An\u00e1lisis Completo EAUI 2026",
+      "file_type": "document",
+      "source_file": "ANALYSIS_COMPLETE.md",
+      "source_location": null,
+      "id": "analysis_complete",
+      "community": 2,
+      "norm_label": "analisis completo eaui 2026"
+    },
+    {
+      "label": "EAUI Subtel Data Graph & Resilience Analysis",
+      "file_type": "document",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": null,
+      "id": "graph_insights",
+      "community": 0,
+      "norm_label": "eaui subtel data graph & resilience analysis"
+    },
+    {
+      "label": "EAUI 2026: Resumen Ejecutivo",
+      "file_type": "document",
+      "source_file": "SUMMARY.md",
+      "source_location": null,
+      "id": "summary",
+      "community": 2,
+      "norm_label": "eaui 2026: resumen ejecutivo"
+    },
+    {
+      "label": "EAUI 2026: An\u00e1lisis Completo - README",
+      "file_type": "document",
+      "source_file": "README_ANALYSIS.md",
+      "source_location": null,
+      "id": "readme_analysis",
+      "community": 4,
+      "norm_label": "eaui 2026: analisis completo - readme"
+    },
+    {
+      "label": "Graphify Knowledge Graph Report",
+      "file_type": "document",
+      "source_file": "GRAPH_REPORT.md",
+      "source_location": null,
+      "id": "graph_report",
+      "community": 5,
+      "norm_label": "graphify knowledge graph report"
+    },
+    {
+      "label": "n_actividades_online (Feature)",
+      "file_type": "rationale",
+      "source_file": "CLASSIFICATION_MODEL_IMPROVED.md",
+      "source_location": "Secci\u00f3n: Las 4 Nuevas Variables",
+      "rationale": "Variable de comportamiento que cuenta actividades online (Q21_1 a Q21_44), rango 0-41. Importancia: 42%. Es el predictor m\u00e1s importante del modelo mejorado.",
+      "id": "n_actividades_online",
+      "community": 1,
+      "norm_label": "n_actividades_online (feature)"
+    },
+    {
+      "label": "Permutation Importance (M\u00e9todo)",
+      "file_type": "rationale",
+      "source_file": "SHAP_ANALYSIS.md",
+      "source_location": "Secci\u00f3n: Comparaci\u00f3n sklearn vs Permutation Importance",
+      "rationale": "T\u00e9cnica robusta para medir importancia de features basada en el cambio en error cuando se permuta una variable. M\u00e1s acertada que sklearn para detectar multicolinealidad y efectos mediados.",
+      "id": "permutation_importance",
+      "community": 3,
+      "norm_label": "permutation importance (metodo)"
+    },
+    {
+      "label": "Feature Engineering: 4 Variables de Comportamiento",
+      "file_type": "rationale",
+      "source_file": "SUMMARY.md",
+      "source_location": "Secci\u00f3n: Feature Engineering: Las 4 Variables Nuevas",
+      "rationale": "Proceso de derivaci\u00f3n de n_actividades_online, frecuencia_internet_num, tiempo_internet_num, n_dispositivos. Mejora model accuracy en 10.5 puntos porcentuales.",
+      "id": "feature_engineering",
+      "community": 1,
+      "norm_label": "feature engineering: 4 variables de comportamiento"
+    },
+    {
+      "label": "Gradient Boosting Classifier",
+      "file_type": "rationale",
+      "source_file": "CLASSIFICATION_MODEL_IMPROVED.md",
+      "source_location": "Secci\u00f3n: Modelo Original vs Mejorado",
+      "rationale": "Algoritmo de clasificaci\u00f3n con 100 estimadores, max_depth=5. Alcanza 63.5% accuracy en modelo mejorado (+10.5 pp mejora).",
+      "id": "gradient_boosting_model",
+      "community": 1,
+      "norm_label": "gradient boosting classifier"
+    },
+    {
+      "label": "GSE Derivation (Matriz 2x6)",
+      "file_type": "rationale",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": "Secci\u00f3n: Stage 1: GSE Derivation (Cell 4)",
+      "rationale": "Tabla de cruce educaci\u00f3n (A10, 4 niveles) x ingreso (6 niveles) que produce 6 categor\u00edas GSE ordenadas (AB>C1>C2>C3>D>E). Controla por confounding entre educaci\u00f3n e ingreso.",
       "id": "gse_derivation",
-      "label": "GSE Derivation",
-      "type": "method",
-      "description": "Calculates derived socioeconomic variables from education and occupation",
-      "source_file": "CLAUDE.md",
-      "rationale": "Required to segment survey respondents by socioeconomic status"
+      "community": 0,
+      "norm_label": "gse derivation (matriz 2x6)"
     },
     {
-      "id": "pyreadstat_lib",
-      "label": "pyreadstat",
-      "type": "tool",
-      "description": "Python library for reading SPSS .sav files",
-      "source_file": "CLAUDE.md"
+      "label": "nivel_habilidades (Target Variable)",
+      "file_type": "rationale",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": "Secci\u00f3n: Stage 4: Digital Skills Classification (Cell 26)",
+      "rationale": "Variable de salida: 4 clases jer\u00e1rquicas (Avanzado, Intermedio, B\u00e1sico, Sin habilidades) derivadas de Q8_1:Q8_19. Distribuci\u00f3n: 31% Avanzado, 44.5% Intermedio, 16.1% B\u00e1sico, 8.4% Sin.",
+      "id": "nivel_habilidades",
+      "community": 0,
+      "norm_label": "nivel_habilidades (target variable)"
     },
     {
-      "id": "pandas_lib",
-      "label": "pandas",
-      "type": "tool",
-      "description": "Data manipulation and analysis library",
-      "source_file": "CLAUDE.md"
+      "label": "Resilience: Youth Overcomes Barriers",
+      "file_type": "rationale",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": "Secci\u00f3n: Age is the Game-Changer",
+      "rationale": "J\u00f3venes (18-29) en segmentos rurales+bajo+educaci\u00f3n media alcanzan 49.4% habilidades avanzadas, superando expectativas (32.8% promedio del segmento). Sugiere que edad es m\u00e1s predictivo que factores socioecon\u00f3micos.",
+      "id": "resilience_finding",
+      "community": 2,
+      "norm_label": "resilience: youth overcomes barriers"
     },
     {
-      "id": "spss_format",
-      "label": "SPSS Format (.sav)",
-      "type": "concept",
-      "description": "Statistical Package for Social Sciences binary format",
-      "source_file": "CLAUDE.md"
+      "label": "Access is NOT the Bottleneck (Policy Insight)",
+      "file_type": "rationale",
+      "source_file": "SHAP_ANALYSIS.md",
+      "source_location": "Secci\u00f3n: Implicaciones para Policy - Access is NOT the bottleneck",
+      "rationale": "acceso_internet contribuye -0.2% en permutation importance (negativa). Entre usuarios conectados (97% del dataset), variaci\u00f3n es 100% comportamiento. Dar internet sin literacidad no sirve.",
+      "id": "access_not_bottleneck",
+      "community": 2,
+      "norm_label": "access is not the bottleneck (policy insight)"
     },
     {
-      "id": "data_dict",
+      "label": "Multicolinearity: GSE mediada por actividades",
+      "file_type": "rationale",
+      "source_file": "SHAP_ANALYSIS.md",
+      "source_location": "Secci\u00f3n: Scenario B - Variable medidora de otra",
+      "rationale": "GSE subestimada por sklearn (6%) vs permutation (1.1%). GSE correlaciona con skills a trav\u00e9s de n_actividades_online. Efecto mediado: GSE\u2192actividades\u2192skills.",
+      "id": "multicolinearity_issue",
+      "community": 3,
+      "norm_label": "multicolinearity: gse mediada por actividades"
+    },
+    {
       "label": "diccionario_variables.csv",
-      "type": "document",
-      "description": "Data dictionary defining all columns and variable properties",
-      "source_file": "CLAUDE.md"
+      "file_type": "document",
+      "source_file": "diccionario_variables.csv",
+      "source_location": null,
+      "id": "diccionario_variables",
+      "community": 6,
+      "norm_label": "diccionario_variables.csv"
     },
     {
-      "id": "informe_final",
-      "label": "informe_final.pdf",
-      "type": "document",
-      "description": "Final analysis report output",
-      "source_file": "CLAUDE.md"
+      "label": "Data Processing Pipeline",
+      "file_type": "rationale",
+      "source_file": "ANALYSIS_COMPLETE.md",
+      "source_location": "Secci\u00f3n: Pipeline de Datos",
+      "rationale": "Secuencia: Load SPSS (Cell 2) \u2192 GSE (Cell 4) \u2192 Rename&Recode (Cells 6,12,14,16-18) \u2192 Skills Classification (Cell 26) \u2192 Analysis Functions (Cell 20) \u2192 Feature Engineering [NEW] \u2192 Classification Model [NEW]",
+      "id": "data_pipeline",
+      "community": 4,
+      "norm_label": "data processing pipeline"
     },
     {
-      "id": "data_sav",
-      "label": "/data/sav/",
-      "type": "concept",
-      "description": "Directory containing SPSS format survey data (2008-2026)",
-      "source_file": "CLAUDE.md"
+      "label": "Behavior > Demographics (Key Finding)",
+      "file_type": "rationale",
+      "source_file": "SUMMARY.md",
+      "source_location": "Secci\u00f3n: Insights Principales - Behavior > Demographics",
+      "rationale": "n_actividades_online (42%) > edad (18%) > gse (6%). Las 4 variables de comportamiento suman 68% de importancia, demogr\u00e1ficas solo 32%. Lo que haces importa m\u00e1s que qui\u00e9n eres.",
+      "id": "behavior_dominates_demographics",
+      "community": 2,
+      "norm_label": "behavior > demographics (key finding)"
     },
     {
-      "id": "jupyter_tool",
-      "label": "Jupyter",
-      "type": "tool",
-      "description": "Interactive notebook environment for data processing",
-      "source_file": "CLAUDE.md"
+      "label": "Urban-Rural Digital Gap",
+      "file_type": "rationale",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": "Secci\u00f3n: Urban/Rural Divide is Substantial",
+      "rationale": "Diferencia de 10pp: urbano 42.4% avanzado vs rural 32.5%. Persiste incluso controlando por ingreso/educaci\u00f3n, sugiriendo geograf\u00eda como barrera independiente.",
+      "id": "urban_rural_gap",
+      "community": 0,
+      "norm_label": "urban-rural digital gap"
     },
     {
-      "id": "text_normalize",
-      "label": "Text Normalization",
-      "type": "method",
-      "description": "Normalize and clean text using re and unicodedata",
-      "source_file": "CLAUDE.md"
+      "label": "Skill Classification: Hierarchical Levels",
+      "file_type": "rationale",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": "Secci\u00f3n: Stage 4: Digital Skills Classification",
+      "rationale": "Jerarqu\u00eda: Avanzado (seguridad, SO, web) > Intermedio (ofim\u00e1tica, creaci\u00f3n, pagos) > B\u00e1sico (streaming, email, redes) > Sin habilidades. M\u00e1ximo nivel alcanzado en Q8_1:Q8_19.",
+      "id": "skill_classification_hierarchy",
+      "community": 0,
+      "norm_label": "skill classification: hierarchical levels"
     },
     {
-      "id": "variable_recoding",
-      "label": "Variable Recoding",
-      "type": "method",
-      "description": "Recode survey variables for analysis",
-      "source_file": "CLAUDE.md"
+      "label": "Income Stratification (3 Groups)",
+      "file_type": "rationale",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": "Secci\u00f3n: Stage 3: Income Stratification (Cell 18)",
+      "rationale": "A12_1 (c\u00f3digo de ingreso) convertido a punto estimado, luego cortado en 3 grupos: Bajo, Medio, Alto. Multiplicador 2x: Alto (62.5% avanzado) vs Bajo (30.8%).",
+      "id": "income_stratification",
+      "community": 0,
+      "norm_label": "income stratification (3 groups)"
+    },
+    {
+      "label": "Q8_1:Q8_19 (Skills Survey Items)",
+      "file_type": "rationale",
+      "source_file": "GRAPH_INSIGHTS.md",
+      "source_location": "Secci\u00f3n: Stage 4: Digital Skills Classification",
+      "rationale": "19 \u00edtems binarios de habilidades digitales: Q8_1-3 ofim\u00e1tica, Q8_4-6 configuraci\u00f3n, Q8_7-9 avanzado, Q8_10-19 b\u00e1sico/consumo.",
+      "id": "q8_skills_items",
+      "community": 0,
+      "norm_label": "q8_1:q8_19 (skills survey items)"
+    },
+    {
+      "label": "Q21_1:Q21_44 (Online Activities)",
+      "file_type": "rationale",
+      "source_file": "CLASSIFICATION_MODEL_IMPROVED.md",
+      "source_location": "Secci\u00f3n: Ingenier\u00eda de Features - n_actividades_online",
+      "rationale": "41 \u00edtems binarios de actividades online: redes sociales, email, transacciones, b\u00fasqueda, entretenimiento, trabajo remoto. Conteo = n_actividades_online feature.",
+      "id": "q21_activities_items",
+      "community": 1,
+      "norm_label": "q21_1:q21_44 (online activities)"
+    },
+    {
+      "label": "frecuencia_internet_num (Feature)",
+      "file_type": "rationale",
+      "source_file": "CLASSIFICATION_MODEL_IMPROVED.md",
+      "source_location": "Secci\u00f3n: Las 4 Nuevas Variables - frecuencia_internet_num",
+      "rationale": "Ordinal 0-4 recodificado de Q10 (frecuencia de acceso). Importancia: 13.2%. Proxy para exposici\u00f3n al internet.",
+      "id": "frecuencia_internet_feature",
+      "community": 1,
+      "norm_label": "frecuencia_internet_num (feature)"
+    },
+    {
+      "label": "Clase B\u00e1sico: Persistent Classification Problem",
+      "file_type": "rationale",
+      "source_file": "CLASSIFICATION_MODEL_IMPROVED.md",
+      "source_location": "Secci\u00f3n: Limitaciones Persistentes - Clase B\u00e1sico Sigue Siendo Dif\u00edcil",
+      "rationale": "F1-score 0.50 vs 0.65 otras clases. Overlap con Intermedio (email vs Excel) y Sin habilidades. Bajo recall (46%). Requiere SMOTE o redefinici\u00f3n.",
+      "id": "clase_basico_problem",
+      "community": 0,
+      "norm_label": "clase basico: persistent classification problem"
     }
   ],
-  "edges": [
+  "links": [
     {
-      "source": "eaui_survey",
-      "target": "eaui_v3_notebook",
-      "label": "processed by",
-      "type": "uses",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Survey data is processed in the main notebook"
+      "source_file": "merged",
+      "source": "eaui2026_v3_ipynb",
+      "target": "data_pipeline"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "pyreadstat_lib",
-      "label": "imports",
-      "type": "imports",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Notebook uses pyreadstat to read SPSS files"
+      "source_file": "merged",
+      "source": "eaui2026_v3_ipynb",
+      "target": "gse_derivation"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "pandas_lib",
-      "label": "imports",
-      "type": "imports",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Notebook uses pandas for data manipulation"
+      "source_file": "merged",
+      "source": "eaui2026_v3_ipynb",
+      "target": "nivel_habilidades"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "jupyter_tool",
-      "label": "runs in",
-      "type": "uses",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Primary work is done in Jupyter notebook environment"
+      "source_file": "merged",
+      "source": "shap_analysis",
+      "target": "permutation_importance"
     },
     {
-      "source": "pyreadstat_lib",
-      "target": "spss_format",
-      "label": "reads",
-      "type": "uses",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "pyreadstat library reads SPSS .sav files"
+      "source_file": "merged",
+      "source": "shap_analysis",
+      "target": "access_not_bottleneck"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "gse_derivation",
-      "label": "contains",
-      "type": "implements",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Notebook implements GSE socioeconomic calculation"
+      "source_file": "merged",
+      "source": "shap_analysis",
+      "target": "multicolinearity_issue"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "variable_recoding",
-      "label": "implements",
-      "type": "implements",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Notebook contains variable recoding logic"
+      "source_file": "merged",
+      "source": "shap_analysis",
+      "target": "gradient_boosting_model"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "text_normalize",
-      "label": "uses",
-      "type": "implements",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Notebook normalizes text with re and unicodedata"
+      "source_file": "merged",
+      "source": "classification_model_improved",
+      "target": "gradient_boosting_model"
     },
     {
-      "source": "data_sav",
-      "target": "spss_format",
-      "label": "contains",
-      "type": "uses",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Data directory contains SPSS format files"
+      "source_file": "merged",
+      "source": "classification_model_improved",
+      "target": "feature_engineering"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "data_sav",
-      "label": "loads from",
-      "type": "uses",
-      "relation_type": "EXTRACTED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "description": "Notebook loads raw data from SPSS files"
+      "source_file": "merged",
+      "source": "classification_model_improved",
+      "target": "n_actividades_online"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "data_dict",
-      "label": "references",
-      "type": "cites",
-      "relation_type": "INFERRED",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "readme_analysis",
+      "target": "classification_model_improved"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "analysis_complete",
+      "target": "data_pipeline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "analysis_complete",
+      "target": "behavior_dominates_demographics"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "analysis_complete",
+      "target": "resilience_finding"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "graph_insights",
+      "target": "gse_derivation"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "graph_insights",
+      "target": "skill_classification_hierarchy"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "graph_insights",
+      "target": "urban_rural_gap"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "graph_insights",
+      "target": "resilience_finding"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "summary",
+      "target": "feature_engineering"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "summary",
+      "target": "behavior_dominates_demographics"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "readme_analysis",
+      "target": "data_pipeline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "feature_engineering",
+      "target": "n_actividades_online"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "n_actividades_online",
+      "target": "behavior_dominates_demographics"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "n_actividades_online",
+      "target": "q21_activities_items"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
       "confidence_score": 0.85,
-      "description": "Notebook uses data dictionary for column definitions"
+      "source_file": "merged",
+      "source": "permutation_importance",
+      "target": "multicolinearity_issue"
     },
     {
-      "source": "eaui_v3_notebook",
-      "target": "informe_final",
-      "label": "generates",
-      "type": "uses",
-      "relation_type": "INFERRED",
-      "confidence_score": 0.8,
-      "description": "Processed data flows to final report generation"
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "feature_engineering",
+      "target": "frecuencia_internet_feature"
     },
     {
-      "source": "variable_recoding",
-      "target": "gse_derivation",
-      "label": "includes",
-      "type": "semantically_similar_to",
-      "relation_type": "INFERRED",
-      "confidence_score": 0.7,
-      "description": "GSE derivation is a specific case of variable recoding"
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "merged",
+      "source": "gradient_boosting_model",
+      "target": "feature_engineering"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "merged",
+      "source": "gse_derivation",
+      "target": "multicolinearity_issue"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "nivel_habilidades",
+      "target": "skill_classification_hierarchy"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "clase_basico_problem",
+      "target": "nivel_habilidades"
+    },
+    {
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "merged",
+      "source": "resilience_finding",
+      "target": "behavior_dominates_demographics"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "merged",
+      "source": "access_not_bottleneck",
+      "target": "behavior_dominates_demographics"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "merged",
+      "source": "income_stratification",
+      "target": "urban_rural_gap"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "merged",
+      "source": "skill_classification_hierarchy",
+      "target": "q8_skills_items"
     }
   ],
   "hyperedges": [
     {
+      "id": "h1",
+      "label": "Feature Engineering & Classification Pipeline",
       "nodes": [
-        "eaui_v3_notebook",
-        "pyreadstat_lib",
-        "pandas_lib",
-        "jupyter_tool"
+        "feature_engineering",
+        "n_actividades_online",
+        "frecuencia_internet_feature",
+        "gradient_boosting_model",
+        "behavior_dominates_demographics"
       ],
-      "label": "Data Processing Stack",
-      "description": "Core technical components used for notebook-based data processing"
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95
     },
     {
+      "id": "h2",
+      "label": "Data Processing & Skills Classification",
       "nodes": [
-        "data_sav",
-        "spss_format",
-        "eaui_survey"
+        "eaui2026_v3_ipynb",
+        "gse_derivation",
+        "data_pipeline",
+        "nivel_habilidades",
+        "skill_classification_hierarchy"
       ],
-      "label": "Input Data",
-      "description": "Raw survey data in SPSS format from multiple years"
+      "relation": "form",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.95
+    },
+    {
+      "id": "h3",
+      "label": "Policy Implications of Feature Importance",
+      "nodes": [
+        "behavior_dominates_demographics",
+        "access_not_bottleneck",
+        "resilience_finding",
+        "permutation_importance"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85
     }
-  ],
-  "metadata": {
-    "total_nodes": 12,
-    "total_edges": 13,
-    "extraction_sources": [
-      "CLAUDE.md"
-    ],
-    "skipped_files": [
-      "docs/informe_final.pdf (PDF read requires poppler)"
-    ],
-    "warning": "Small corpus (539 words) - graph is minimal. Notebooks (.ipynb) not detected by default patterns."
-  }
+  ]
 }
