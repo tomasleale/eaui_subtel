@@ -4,7 +4,7 @@
       "id": "eaui_survey",
       "label": "EAUI 2026 Survey",
       "type": "concept",
-      "description": "Encuesta de Acceso y Uso de Internet \u2014 telecommunications survey data",
+      "description": "Encuesta de Acceso y Uso de Internet — telecommunications survey data",
       "source_file": "CLAUDE.md"
     },
     {
@@ -207,34 +207,16 @@
   ],
   "hyperedges": [
     {
-      "nodes": [
-        "eaui_v3_notebook",
-        "pyreadstat_lib",
-        "pandas_lib",
-        "jupyter_tool"
-      ],
+      "nodes": ["eaui_v3_notebook", "pyreadstat_lib", "pandas_lib", "jupyter_tool"],
       "label": "Data Processing Stack",
       "description": "Core technical components used for notebook-based data processing"
     },
     {
-      "nodes": [
-        "data_sav",
-        "spss_format",
-        "eaui_survey"
-      ],
+      "nodes": ["data_sav", "spss_format", "eaui_survey"],
       "label": "Input Data",
       "description": "Raw survey data in SPSS format from multiple years"
     }
   ],
-  "metadata": {
-    "total_nodes": 12,
-    "total_edges": 13,
-    "extraction_sources": [
-      "CLAUDE.md"
-    ],
-    "skipped_files": [
-      "docs/informe_final.pdf (PDF read requires poppler)"
-    ],
-    "warning": "Small corpus (539 words) - graph is minimal. Notebooks (.ipynb) not detected by default patterns."
-  }
+  "input_tokens": 0,
+  "output_tokens": 0
 }

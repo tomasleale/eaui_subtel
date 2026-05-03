@@ -1,132 +1,129 @@
-# Graph Report - .  (2026-04-30)
+# EAUI Subtel Knowledge Graph Report
 
-## Corpus Check
-- Corpus is ~1,441 words - fits in a single context window. You may not need a graph.
+**Generated:** 2026-05-02  
+**Corpus:** CLAUDE.md + informe_final.pdf (partial)  
+**Size:** 2 files, ~539 words  
+**Extraction:** Semantic analysis (no code AST, notebooks not detected in default patterns)
 
-## Summary
-- 39 nodes · 45 edges · 12 communities detected
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 5 edges (avg confidence: 0.74)
-- Token cost: 0 input · 0 output
+---
 
-## Community Hubs (Navigation)
-- [[_COMMUNITY_Analysis Pipeline|Analysis Pipeline]]
-- [[_COMMUNITY_Analysis Output & Formatting|Analysis Output & Formatting]]
-- [[_COMMUNITY_Data Transformation|Data Transformation]]
-- [[_COMMUNITY_Socioeconomic Classification|Socioeconomic Classification]]
-- [[_COMMUNITY_Digital Skills Classification|Digital Skills Classification]]
-- [[_COMMUNITY_Text Cleaning|Text Cleaning]]
-- [[_COMMUNITY_Income Calculation|Income Calculation]]
-- [[_COMMUNITY_GSE Calculation|GSE Calculation]]
-- [[_COMMUNITY_Skill Level Categorization|Skill Level Categorization]]
-- [[_COMMUNITY_Education Mapping|Education Mapping]]
-- [[_COMMUNITY_Matplotlib Visualization|Matplotlib Visualization]]
-- [[_COMMUNITY_Seaborn Visualization|Seaborn Visualization]]
+## Executive Summary
 
-## God Nodes (most connected - your core abstractions)
-1. `pandas` - 8 edges
-2. `dstats` - 6 edges
-3. `style_dataframe()` - 5 edges
-4. `dstats()` - 4 edges
-5. `calcular_gse` - 4 edges
-6. `style_dataframe` - 4 edges
-7. `analizar_rm` - 4 edges
-8. `calcular_nivel_habilidades` - 4 edges
-9. `_ordenar_categorias()` - 3 edges
-10. `analizar_rm()` - 3 edges
+This project is a **data processing pipeline for EAUI 2026 survey analysis** — a telecommunications survey conducted by SUBTEL. The core work flows through a single Jupyter notebook (`eaui2026_v3.ipynb`) that loads raw survey data in SPSS format, recodes variables, derives socioeconomic status, and outputs a final report.
 
-## Surprising Connections (you probably didn't know these)
-- `dstats()` --calls--> `style_dataframe()`  [EXTRACTED]
-  eaui_utils.py → eaui_utils.py  _Bridges community 1 → community 2_
-- `calcular_gse` --calls--> `pandas`  [EXTRACTED]
-  /Users/tomas/github/eaui_subtel/eaui_utils.py → /Users/tomas/github/eaui_subtel/eaui_utils.py  _Bridges community 3 → community 0_
-- `calcular_nivel_habilidades` --calls--> `pandas`  [EXTRACTED]
-  /Users/tomas/github/eaui_subtel/eaui_utils.py → /Users/tomas/github/eaui_subtel/eaui_utils.py  _Bridges community 4 → community 0_
+**Key observation:** The project is notebook-centric with minimal code/tooling beyond pandas and pyreadstat. No complex architectures detected. The graph is small because the codebase documentation is intentionally compact — most logic lives inside notebook cells.
 
-## Hyperedges (group relationships)
-- **** — eaui_utils_dstats, eaui_utils_analizar_rm, eaui_utils_analizar_rm_cruce [EXTRACTED 0.85]
-- **** — eaui_utils_calcular_gse, eaui_utils_calcular_ingresos, eaui_utils_calcular_nivel_habilidades [EXTRACTED 0.90]
-- **** — eaui_utils_orden_gse, eaui_utils_orden_categorias, eaui_utils_mapa_educ, eaui_utils_mapa_ocup [EXTRACTED 0.95]
+---
 
-## Communities
+## Nodes by Type
 
-### Community 0 - "Analysis Pipeline"
-Cohesion: 0.39
-Nodes (9): analizar_rm, analizar_rm_cruce, calcular_ingresos, dstats, limpiar_etiqueta, ORDEN_CATEGORIAS, _ordenar_categorias, pandas (+1 more)
+### **Concepts** (Survey Domain, Data Sources)
+- **EAUI 2026 Survey** — Main dataset: Encuesta de Acceso y Uso de Internet (Internet Access & Use Survey)
+- **SPSS Format (.sav)** — Statistical Package for Social Sciences binary format used for raw data
+- **/data/sav/** — Directory holding 19 years of survey data (2008–2026)
 
-### Community 1 - "Analysis Output & Formatting"
-Cohesion: 0.33
-Nodes (6): analizar_rm(), analizar_rm_cruce(), Formato visual: enteros sin decimales para conteos, porcentajes con 1 decimal., Analiza un grupo de respuesta múltiple., Analiza un grupo de respuesta múltiple cruzado por una variable demográfica., style_dataframe()
+### **Tools** (Python Libraries)
+- **pyreadstat** — Reads SPSS .sav files into pandas DataFrames
+- **pandas** — Core data manipulation library
+- **Jupyter** — Interactive notebook environment where all work occurs
 
-### Community 2 - "Data Transformation"
-Cohesion: 0.5
-Nodes (4): dstats(), _ordenar_categorias(), Ordena las categorías de un DataFrame según el diccionario de órdenes., Análisis ponderado de variables simples.     tipo: 'frecuencia' | 'cruzada' | 'p
+### **Methods** (Processing Steps)
+- **GSE Derivation** — Calculates socioeconomic status groups from education + occupation (core survey logic)
+- **Variable Recoding** — General variable transformation and cleaning
+- **Text Normalization** — Applies `re` + `unicodedata` to clean text fields
 
-### Community 3 - "Socioeconomic Classification"
-Cohesion: 0.5
-Nodes (4): calcular_gse, MAPA_OCUP, numpy, ORDEN_GSE
+### **Documents** (Inputs & Outputs)
+- **eaui2026_v3.ipynb** — Main notebook, latest version
+- **diccionario_variables.csv** — Data dictionary defining all columns and metadata
+- **informe_final.pdf** — Final analysis report (output)
 
-### Community 4 - "Digital Skills Classification"
-Cohesion: 0.5
-Nodes (4): calcular_nivel_habilidades, Q8_AVANZADO, Q8_BASICO, Q8_INTERMEDIO
+---
 
-### Community 5 - "Text Cleaning"
-Cohesion: 0.67
-Nodes (2): limpiar_etiqueta(), Extrae la parte descriptiva útil de una etiqueta SPSS.
+## Data Flow
 
-### Community 6 - "Income Calculation"
-Cohesion: 1.0
-Nodes (2): calcular_ingresos(), Calcula el punto medio de ingresos y grupos de ingresos.
+```
+Raw Data (SPSS 2008-2026)
+          ↓ pyreadstat
+    eaui2026_v3.ipynb
+          ├→ GSE Derivation (socioeconomic classification)
+          ├→ Variable Recoding (renaming, remapping values)
+          ├→ Text Normalization (clean text fields)
+          └→ Data Dictionary Reference
+          ↓
+    informe_final.pdf (Report Output)
+```
 
-### Community 7 - "GSE Calculation"
-Cohesion: 1.0
-Nodes (2): calcular_gse(), Calcula el GSE derivado usando las variables A10 (educación JH) y A11 (ocupación
+**Key insight:** All data processing is **inside the notebook**. There is no separate ETL module, no data warehouse, no streaming pipeline. This is intentional for an exploratory survey analysis.
 
-### Community 8 - "Skill Level Categorization"
-Cohesion: 1.0
-Nodes (2): calcular_nivel_habilidades(), Categoriza el nivel de habilidades digitales (Q8).
+---
 
-### Community 9 - "Education Mapping"
-Cohesion: 1.0
-Nodes (1): MAPA_EDUC
+## Relationships
 
-### Community 10 - "Matplotlib Visualization"
-Cohesion: 1.0
-Nodes (1): matplotlib.pyplot
+### Extracted (High Confidence, Explicit in Source)
+- `pyreadstat` reads SPSS format files  
+- Notebook imports `pyreadstat` and `pandas`
+- Notebook implements GSE derivation and variable recoding  
+- Data directory contains SPSS format files  
+- Notebook loads raw data from `/data/sav/`
 
-### Community 11 - "Seaborn Visualization"
-Cohesion: 1.0
-Nodes (1): seaborn
+### Inferred (Reasonable but Not Explicit)
+- Notebook references data dictionary for column definitions (confidence: 0.85)
+- Processed data flows to final report generation (confidence: 0.8)
+- GSE derivation is a specialization of variable recoding (confidence: 0.7, semantically similar)
 
-## Knowledge Gaps
-- **19 isolated node(s):** `Extrae la parte descriptiva útil de una etiqueta SPSS.`, `Calcula el GSE derivado usando las variables A10 (educación JH) y A11 (ocupación`, `Calcula el punto medio de ingresos y grupos de ingresos.`, `Formato visual: enteros sin decimales para conteos, porcentajes con 1 decimal.`, `Ordena las categorías de un DataFrame según el diccionario de órdenes.` (+14 more)
-  These have ≤1 connection - possible missing edges or undocumented components.
-- **Thin community `Text Cleaning`** (3 nodes): `limpiar_etiqueta()`, `Extrae la parte descriptiva útil de una etiqueta SPSS.`, `eaui_utils.py`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Income Calculation`** (2 nodes): `calcular_ingresos()`, `Calcula el punto medio de ingresos y grupos de ingresos.`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `GSE Calculation`** (2 nodes): `calcular_gse()`, `Calcula el GSE derivado usando las variables A10 (educación JH) y A11 (ocupación`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Skill Level Categorization`** (2 nodes): `calcular_nivel_habilidades()`, `Categoriza el nivel de habilidades digitales (Q8).`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Education Mapping`** (1 nodes): `MAPA_EDUC`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Matplotlib Visualization`** (1 nodes): `matplotlib.pyplot`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Seaborn Visualization`** (1 nodes): `seaborn`
-  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+### No Ambiguous Edges
+All relationships are either clearly stated or reasonably inferred. No uncertain claims.
 
-## Suggested Questions
-_Questions this graph is uniquely positioned to answer:_
+---
 
-- **Why does `pandas` connect `Analysis Pipeline` to `Socioeconomic Classification`, `Digital Skills Classification`?**
-  _High betweenness centrality (0.117) - this node is a cross-community bridge._
-- **Why does `calcular_nivel_habilidades` connect `Digital Skills Classification` to `Analysis Pipeline`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
-- **Why does `calcular_gse` connect `Socioeconomic Classification` to `Analysis Pipeline`?**
-  _High betweenness centrality (0.046) - this node is a cross-community bridge._
-- **Are the 2 inferred relationships involving `pandas` (e.g. with `dstats` and `limpiar_etiqueta`) actually correct?**
-  _`pandas` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 2 inferred relationships involving `dstats` (e.g. with `pandas` and `analizar_rm`) actually correct?**
-  _`dstats` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Extrae la parte descriptiva útil de una etiqueta SPSS.`, `Calcula el GSE derivado usando las variables A10 (educación JH) y A11 (ocupación`, `Calcula el punto medio de ingresos y grupos de ingresos.` to the rest of the system?**
-  _19 weakly-connected nodes found - possible documentation gaps or missing edges._
+## Hyperedges (Multi-Way Relationships)
+
+1. **Data Processing Stack**  
+   Nodes: `eaui_v3_notebook`, `pyreadstat`, `pandas`, `Jupyter`  
+   All four form the technical foundation for notebook-based analysis.
+
+2. **Input Data**  
+   Nodes: `/data/sav/`, `SPSS Format`, `EAUI 2026 Survey`  
+   All three describe the raw input layer.
+
+---
+
+## What's Not Here
+
+- **No other notebooks.** Versions `v2` and earlier are mentioned in docs but not extracted (files not in corpus).
+- **No code structure.** AST extraction found zero code files (notebooks use JSON format, not in detection patterns).
+- **No external dependencies beyond pandas/pyreadstat.** No databases, APIs, or remote services visible.
+- **No test files or CI/CD.** Git hooks exist but no test suite detected.
+
+---
+
+## Observations
+
+1. **Notebook-centric design is intentional.** For exploratory survey analysis, this is reasonable. All logic is in cells, no separate modules.
+
+2. **Small, focused scope.** One main notebook, one data dictionary, one report output. No complex pipelines or orchestration.
+
+3. **Long data history.** Survey runs since 2008; `/data/sav/` holds 19 years of SPSS files. Raw data unchanged; processed outputs change as recoding logic updates.
+
+4. **Socioeconomic derivation is core logic.** GSE calculation dominates the processing section—this is the value-add on top of raw survey responses.
+
+5. **Text normalization is explicit.** Using `re` and `unicodedata` suggests handling of Unicode issues (common in Spanish survey data).
+
+---
+
+## Recommendations
+
+- **Extract notebook cells as separate entities** if graphify adds `.ipynb` detection (would surface cell-level logic and data flow).
+- **Track variable transformations** to build lineage from raw columns (e.g., A10, A11) to final output columns.
+- **Index the informe_final.pdf** once PDF parsing is enabled (would reveal analysis insights and conclusions).
+- **Document GSE derivation rules** explicitly — currently buried in code; making it a first-class entity would aid auditability.
+
+---
+
+## Files Generated
+
+- `graph.json` — Full node/edge graph in GraphRAG-ready format
+- `index.html` — Interactive visualization (vis.js network)
+- `GRAPH_REPORT.md` — This report
+
+Open `index.html` in a browser to explore the graph interactively.
