@@ -1,109 +1,143 @@
-# CLAUDE.md
+# CLAUDE.md — eaui_subtel
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+**Project:** EAUI Subtel 2026 Data Processing & Analysis  
+**Tech Stack:** Python / Jupyter / Pandas / Numpy  
+**Data:** SPSS (.sav), CSV, Excel | 5,000 cases × 587 variables  
+**Expansion factors:** fe_personas (person-level), fe_hogar (household-level)
 
-## Project Overview
+## Quick Start
 
-**EAUI Subtel** is a data processing and analysis project for the EAUI 2026 survey (Encuesta de Acceso y Uso de Internet). It loads, recodes, and prepares telecommunications survey data from multiple formats (SPSS `.sav`, CSV, Excel).
-
-**Primary work:** Jupyter notebooks in root directory
-- `eaui2026_v3.ipynb` — latest version, main processing pipeline
-- `eaui2026_v2.ipynb`, `eaui2026.ipynb` — earlier versions
-
-**Data:** `/data/` directory contains survey data in multiple formats:
-- `/data/sav/` — SPSS format files (2008–2026)
-- `/data/csv/` — CSV exports
-- `/data/xlsx/` — Excel exports
-- `diccionario_variables.csv` — data dictionary defining all columns
-
-**Output:** `/docs/informe_final.pdf` — final analysis report
-
-## Python Dependencies
-
-Primary libraries (inferred from notebook imports):
-- `pyreadstat` — read SPSS `.sav` files
-- `pandas` — data manipulation
-- `re`, `unicodedata` — text normalization
-
-Install via:
 ```bash
-pip install pyreadstat pandas
-```
+# Activate environment
+source ~/.pyenv/versions/datascience/bin/activate
 
-## Working with Notebooks
-
-Run Jupyter locally:
-```bash
+# Start Jupyter
 jupyter notebook
+
+# Open main notebook
+# → eaui2026_v3.ipynb (latest)
 ```
 
-Then open `eaui2026_v3.ipynb` in the browser.
+## Project Structure
 
-The notebook is organized into sections:
-1. **Load file** — reads SPSS data via `pyreadstat`
-2. **Derive GSE** — calculates derived socioeconomic variables (uses original SPSS column names like `A10`, `A11`)
-3. Additional data processing and recoding sections follow
+```
+.
+├── eaui2026_v*.ipynb          # Main processing notebooks (v3 is latest)
+├── data/
+│   ├── sav/                   # Raw SPSS files (2008–2026)
+│   ├── csv/                   # CSV exports
+│   └── xlsx/                  # Excel files
+├── docs/
+│   ├── informe_final.pdf      # Final analysis report
+│   ├── PLAN_ANALISIS_EAUI2026.md
+│   ├── PLAN_UNIVARIADO_EAUI2026.md
+│   └── ...
+├── analysis/
+│   ├── documentation/         # Model docs, analysis guides
+│   └── ...
+├── diccionario_variables.csv  # Data dictionary
+└── .claude-os/                # Claude OS config
+```
 
-## Data Flow
+## Data Dictionary
 
-1. Raw data in `/data/sav/` (SPSS format)
-2. Load via `pyreadstat.read_sav()` → pandas DataFrame
-3. Recode variables (GSE derivation, text normalization, etc.)
-4. Output to CSV or used for analysis
-5. Generate report (`docs/informe_final.pdf`)
-
-## Key Variable Definitions
-
-See `diccionario_variables.csv` for the data dictionary:
-- `nombre_columna` — column name in final dataset
+`diccionario_variables.csv` defines all columns:
+- `nombre_columna` — final column name
 - `tipo_datos` — Python dtype
 - `valores_unicos` — cardinality
 - `null_count` — missing values
 - `descripcion` — variable description
 
-## Git & Version Control
+Load it:
+```python
+import pandas as pd
+diccionario = pd.read_csv('diccionario_variables.csv')
+```
 
-Active branch: `main`  
-Remote: origin
+## Processing Pipeline
 
-The `.git/hooks/` directory contains custom hooks (`pre-commit`, `post-checkout`, `post-commit`) — inspect if automated behavior seems unexpected.
+1. **Load** — `pyreadstat.read_sav()` → pandas DataFrame
+2. **Derive GSE** — calculate socioeconomic variables (uses SPSS column names: A10, A11, etc.)
+3. **Recode** — normalize text, handle missing values
+4. **Export** — save to CSV or use for analysis
+5. **Report** — generate informe_final.pdf
+
+## Key Libraries
+
+- `pyreadstat` — read/write SPSS `.sav`
+- `pandas` — data frames & manipulation
+- `numpy` — numeric ops
+- `re`, `unicodedata` — text normalization
+
+Install:
+```bash
+pip install pyreadstat pandas numpy
+```
+
+## Notebook Workflow
+
+Notebooks are **source of truth** for processing logic. Always:
+1. Keep notebooks **top-to-bottom reproducible** ("Restart & Run All")
+2. Use **expansion factors** in weighted calculations: `fe_personas`, `fe_hogar`
+3. Reference **SPSS column names** (A10, A11) in comments when deriving GSE
+4. Save **derived data** to separate paths (never overwrite raw `/data/sav/`)
+
+## Claude OS Integration
+
+Claude OS provides:
+- **Structural Index** — instant codebase map (tree-sitter)
+- **Semantic Search** — "How does GSE derivation work?"
+- **Project Memory** — saves decisions, patterns, architecture
+- **Knowledge Docs** — all `/docs` and `/analysis/documentation` indexed
+
+Use:
+```
+/claude-os-search — search project
+/claude-os-save — save insight
+/claude-os-session — manage work sessions
+/claude-os-remember — quick save
+```
+
+## Agent-OS
+
+8 specialized agents available for structured development:
+- **Product** — gather requirements
+- **Specs** — create detailed specifications
+- **Standards** — backend/frontend/global/testing guides
+- **Implementation** — code generation with verification
+
+Activate: "I'm using Agent-OS to implement this feature"
 
 ## Common Tasks
 
-**View data structure:**
+**View data:**
 ```python
-# In notebook or Python REPL
 import pyreadstat
 df, meta = pyreadstat.read_sav('data/sav/2026.sav')
 df.head()
 df.info()
 ```
 
-**Load variable dictionary:**
+**Apply expansion factor (person-level):**
 ```python
-diccionario = pd.read_csv('diccionario_variables.csv')
+# Weighted aggregation
+df.groupby('variable').size() * df['fe_personas']
 ```
 
 **Update from SPSS:**
-When raw SPSS files change, re-run the full notebook to rebuild processed datasets.
+When raw SPSS files change, re-run notebook top-to-bottom to rebuild datasets.
 
-## Rules for Claude when working with Jupyter notebooks
+## Rules for Claude
 
-### Tool preference
-- Use the Jupyter MCP for all `.ipynb` operations — read, edit, insert, delete, execute.
-- Do not use your built-in `NotebookEdit` tool; it writes source as a single JSON string, which ruins standard Jupyter formatting.
+- Use Jupyter MCP for notebook operations (read, edit, insert, execute)
+- **Never modify raw `/data/sav/` files** — write to separate path
+- Execute cells to verify — don't assume correctness
+- Large outputs consume tokens — prefer `.head()`, `.shape`
+- Notebooks must be reproducible: "Restart & Run All" always works
+- Expansion factors matter: always use `fe_personas` or `fe_hogar` in weighted calcs
 
-### Outputs
-- Never print secrets, API keys, tokens, or passwords into cell output.
-- Large outputs consume tokens and fill up your context window. Prefer summaries (`.head()`, `.shape`) over dumping full DataFrames.
+## Documentation
 
-### Execution
-- When installing packages, use `%pip install` inside the notebook (not `!pip install`) so packages install into the running kernel.
-- Execute cells to verify they work. Do not assume the code is correct.
-- If a cell errors, read the actual traceback before attempting a fix. Do not guess.
-
-### State and reproducibility
-- Jupyter kernels are stateful. A notebook that runs top-to-bottom after "Restart & Run All" is the only notebook that works — verify this before declaring a task done.
-
-### Data safety
-- Do not modify or delete raw data files. Write derived data to a separate path.
+- **docs/** — reports, analysis plans, dashboards
+- **analysis/documentation/** — model guides, SHAP analysis, insights
+- All indexed in Claude OS knowledge base
