@@ -1,0 +1,88 @@
+================================================================================
+CARACTERIZACIÓN Y CLUSTERING: df_nocon (con pesos fe_hogar)
+================================================================================
+
+Variables solicitadas: ['gse', 'zona', 'region', 'educ_jh', 'ocupacion_jh']
+Variables 'tiene': ['tiene_basicas', 'tiene_intermedias', 'tiene_avanzadas', 'tiene_productivas', 'tiene_recreativas', 'tiene_creatividad', 'tiene_comunicaciones']
+
+Variables disponibles para clustering: ['gse', 'zona', 'region', 'educ_jh', 'ocupacion_jh']
+Variables 'tiene' disponibles: ['tiene_basicas', 'tiene_intermedias', 'tiene_avanzadas', 'tiene_productivas', 'tiene_recreativas', 'tiene_creatividad', 'tiene_comunicaciones']
+Casos válidos: 159 de 159
+
+================================================================================
+CODIFICACIÓN DE VARIABLES
+================================================================================
+  Codificada: gse (6 categorías)
+  Codificada: zona (2 categorías)
+  Codificada: region (16 categorías)
+  Codificada: educ_jh (11 categorías)
+  Codificada: ocupacion_jh (5 categorías)
+  Codificada: tiene_basicas (2 categorías)
+  Codificada: tiene_intermedias (2 categorías)
+  Codificada: tiene_avanzadas (2 categorías)
+  Codificada: tiene_productivas (2 categorías)
+  Codificada: tiene_recreativas (2 categorías)
+  Codificada: tiene_creatividad (2 categorías)
+  Codificada: tiene_comunicaciones (2 categorías)
+
+Matriz X lista: (159, 12) (12 variables)
+Pesos (fe_hogar) - Min: 194.20, Max: 5584.12, Media: 1221.08
+
+================================================================================
+EVALUACIÓN DEL K ÓPTIMO
+================================================================================
+K= 2: Inertia= 2138.86 | Silhouette=0.4488
+K= 3: Inertia= 1626.93 | Silhouette=0.4580
+K= 4: Inertia= 1263.20 | Silhouette=0.4030
+K= 5: Inertia= 1045.16 | Silhouette=0.4099
+K= 6: Inertia=  848.47 | Silhouette=0.3851
+K= 7: Inertia=  752.93 | Silhouette=0.3684
+K= 8: Inertia=  662.61 | Silhouette=0.3632
+K= 9: Inertia=  608.61 | Silhouette=0.3612
+K=10: Inertia=  543.95 | Silhouette=0.3684
+
+→ K ÓPTIMO: 3 (mejor Silhouette)
+
+================================================================================
+EJECUCIÓN DE K-MEANS (K=3) CON PESOS
+================================================================================
+
+Distribución por cluster (casos reales y ponderados):
+  Cluster 0:    14 casos (  8.8%) | Ponderado:       16,830 (  8.7%)
+  Cluster 1:    71 casos ( 44.7%) | Ponderado:       62,726 ( 32.3%)
+  Cluster 2:    74 casos ( 46.5%) | Ponderado:      114,594 ( 59.0%)
+
+================================================================================
+PERFIL DE CADA CLUSTER
+================================================================================
+
+────────────────────────────────────────────────────────────
+CLUSTER 0 (14 casos | Ponderado: 16,830)
+────────────────────────────────────────────────────────────
+  gse                 : C1                   ( 42.9%)
+  zona                : Urbana               ( 85.7%)
+  region              : Biobío               ( 28.6%)
+  educ_jh             : Superior universitaria completa ( 50.0%)
+  ocupacion_jh        : Empleado medio - técnico - prof. independiente ( 57.1%)
+
+────────────────────────────────────────────────────────────
+CLUSTER 1 (71 casos | Ponderado: 62,726)
+────────────────────────────────────────────────────────────
+  gse                 : E                    ( 46.5%)
+  zona                : Urbana               ( 69.0%)
+  region              : Biobío               ( 45.1%)
+  educ_jh             : Básica completa      ( 31.0%)
+  ocupacion_jh        : Obrero calificado - microempresario ( 33.8%)
+
+────────────────────────────────────────────────────────────
+CLUSTER 2 (74 casos | Ponderado: 114,594)
+────────────────────────────────────────────────────────────
+  gse                 : E                    ( 48.6%)
+  zona                : Urbana               ( 52.7%)
+  region              : Metropolitana        ( 33.8%)
+  educ_jh             : Básica incompleta    ( 40.5%)
+  ocupacion_jh        : Obrero calificado - microempresario ( 43.2%)
+
+================================================================================
+FIN DEL ANÁLISIS DE CLUSTERING
+================================================================================
